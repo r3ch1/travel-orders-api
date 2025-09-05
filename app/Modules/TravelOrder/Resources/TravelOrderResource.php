@@ -15,6 +15,7 @@ class TravelOrderResource extends JsonResource
             'destination' => $this->destination,
             'departure_at' => $this->departure_at->format('Y-m-d\TH:i:sP'),
             'return_at' => $this->return_at->format('Y-m-d\TH:i:sP'),
+            'status' => $this->status,
             'updated_at' => $this->updated_at,
             'created_at' => $this->created_at,
         ];

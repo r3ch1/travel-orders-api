@@ -11,9 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //TODO: add auth and remove this
+        //TODO: add auth
         $middleware->validateCsrfTokens(except: [
-            '*'
+            'api/*'
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
