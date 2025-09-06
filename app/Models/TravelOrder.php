@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Modules\TravelOrder\Enums\Status;
 use Illuminate\Database\Eloquent\Builder;
 use Carbon\CarbonImmutable ;
-
+use App\Models\Traits\TravelOrderUpdatesTrait;
 class TravelOrder extends Model
 {
-    use HasFactory;
+    use HasFactory, TravelOrderUpdatesTrait;
     protected $fillable = [
         'applicant_name',
         'user_id',
@@ -28,7 +28,7 @@ class TravelOrder extends Model
     ];
 
     protected $attributes = [
-        'status' => Status::Requested->value,
+        'status' => Status::REQUESTED->value,
     ];
 
     public function user(): BelongsTo

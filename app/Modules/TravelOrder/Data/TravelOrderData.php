@@ -29,7 +29,7 @@ class TravelOrderData extends Data
         #[FromAuthenticatedUserProperty('api','id')]
         public $user_id=1
         ) {
-            $this->status ??= Status::Requested->value;
+            $this->status ??= Status::REQUESTED->value;
         }
 
     public static function rules(ValidationContext $context): array
