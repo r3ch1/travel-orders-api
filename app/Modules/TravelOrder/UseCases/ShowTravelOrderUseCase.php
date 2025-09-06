@@ -6,13 +6,11 @@ use App\Modules\TravelOrder\Data\TravelOrderIdData;
 use App\Modules\TravelOrder\Repositories\TravelOrderRepository;
 use App\Models\TravelOrder;
 
-class UpdateTravelOrderUseCase
+class ShowTravelOrderUseCase
 {
     public function execute(TravelOrderIdData $data): TravelOrder
     {
-        //TODO: add validation: creation-user cant change status
         $repository = app(TravelOrderRepository::class);
-        $travelOrder = $repository->findById($data->id);
-        return $repository->update($travelOrder, $data);
+        return $repository->findById($data->id);
     }
 }
