@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Modules\User\Data\LoginData;
+use App\Modules\User\Data\UserData;
 use App\Modules\User\UseCases\HandleLoginUseCase;
+use App\Modules\User\UseCases\HandleRegisterUseCase;
 
 class AuthController
 {
@@ -23,34 +25,9 @@ class AuthController
     /**
      * Endpoint (POST): /register
      */
-    public function register()
+    public function register(UserData $data, HandleRegisterUseCase $useCase)
     {
-        $request = request();
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        $token = $user->createToken('travel-api')->plainTextToken;
-
-        return response()->json([
-            'message' => 'User registered successfully',
-            'user' => $user,
-            'token' => $token
-        ], 201);
+        return $useCase->execute($data);
     }
 
     public function logout()

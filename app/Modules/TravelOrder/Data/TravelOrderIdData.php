@@ -17,9 +17,7 @@ class TravelOrderIdData extends Data
     public function __construct(
         #[FromRouteParameter('travel_order')]
         public int $id,
-        public ?string $status,
-        #[FromAuthenticatedUserProperty('sanctum','id')]
-        public $user_id=1
+        public ?string $status
         ) {
             $this->status ??= Status::REQUESTED->value;
         }

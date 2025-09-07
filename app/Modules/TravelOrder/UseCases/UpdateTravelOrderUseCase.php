@@ -13,7 +13,6 @@ class UpdateTravelOrderUseCase
 {
     public function execute(TravelOrderIdData $data): TravelOrder
     {
-        //TODO: add validation: creation-user cant change status
         if (!in_array($data->status, array_map(fn($status) => $status->value, Status::finishers())))
         {
             throw new NewStatusNeedToBeCancalledOrApprovedException;

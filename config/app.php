@@ -127,4 +127,6 @@ return [
         'per_page' => env('PER_PAGE', 15)
     ],
 
+    'user_admin_password' => env('USER_ADMIN_PASSWORD', '12345678'),
+
 ];

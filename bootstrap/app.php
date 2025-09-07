@@ -12,8 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //TODO: add auth
-        $middleware->validateCsrfTokens(except: [
+        $middleware->alias([
+            'profile' => \App\Support\Middlewares\ProfileMiddleware::class,
+        ])->validateCsrfTokens(except: [
             'api/*'
         ]);
     })

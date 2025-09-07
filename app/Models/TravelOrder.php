@@ -38,6 +38,9 @@ class TravelOrder extends Model
 
     public function scopeByLoggedUser(Builder $query): Builder
     {
+        if (auth()->user()->profile->isAdmin) {
+            return $query;
+        }
         return $query
         ->where('user_id', auth()->user()->id);
     }

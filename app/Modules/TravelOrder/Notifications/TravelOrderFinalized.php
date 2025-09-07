@@ -37,6 +37,7 @@ class TravelOrderFinalized extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
+            ->greeting('Hello, '.$notifiable->name)
             ->line('Your travel order(#'.$this->model->id.') was '.$this->model->status)
             ->action('Click here to see travel order details', route('travel-orders.show', ['travel_order' => $this->model->id]))
             ->line('Thank you for using our application!');
