@@ -38,8 +38,8 @@ class TravelOrder extends Model
 
     public function scopeByLoggedUser(Builder $query): Builder
     {
-        //TODO: implement filter by logged user
-        return $query;
+        return $query
+        ->where('user_id', auth()->user()->id);
     }
 
     public function scopeDatesStartAt(Builder $query, CarbonImmutable $date): Builder

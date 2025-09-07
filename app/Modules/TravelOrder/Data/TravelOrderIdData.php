@@ -10,7 +10,6 @@ use App\Modules\TravelOrder\Enums\Status;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 use Spatie\LaravelData\Attributes\FromRouteParameter;
-// use Spatie\LaravelData\Attributes\FromAuthenticatedUserProperty;
 
 #[MapName(SnakeCaseMapper::class)]
 class TravelOrderIdData extends Data
@@ -19,7 +18,7 @@ class TravelOrderIdData extends Data
         #[FromRouteParameter('travel_order')]
         public int $id,
         public ?string $status,
-        #[FromAuthenticatedUserProperty('api','id')]
+        #[FromAuthenticatedUserProperty('sanctum','id')]
         public $user_id=1
         ) {
             $this->status ??= Status::REQUESTED->value;

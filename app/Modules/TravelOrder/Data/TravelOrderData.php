@@ -7,6 +7,7 @@ use Carbon\CarbonImmutable;
 use Illuminate\Validation\Rule;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Attributes\WithCast;
+use Spatie\LaravelData\Attributes\FromAuthenticatedUserProperty;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 use Spatie\LaravelData\Support\Validation\ValidationContext;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
@@ -26,8 +27,8 @@ class TravelOrderData extends Data
         #[WithCast(DateTimeInterfaceCast::class, format: self::DATE_FORMAT)]
         public CarbonImmutable $returnAt,
         public ?string $status,
-        #[FromAuthenticatedUserProperty('api','id')]
-        public $user_id=1
+        #[FromAuthenticatedUserProperty('sanctum','id')]
+        public $user_id,
         ) {
             $this->status ??= Status::REQUESTED->value;
         }

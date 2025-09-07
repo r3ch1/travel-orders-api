@@ -30,13 +30,11 @@ class TravelOrderQueryData extends Data
 
         public ?string $status,
         public ?string $destination,
-        #[FromAuthenticatedUserProperty('api','id')]
         #[Min(1)]
         public ?int $page = null,
 
         #[Min(1), Max(100)]
         public ?int $perPage = null,
-        public $userId=1
         ) {
             $this->page ??= 1;
             $this->perPage ??= config('app.pagination.per_page');
