@@ -30,7 +30,7 @@ class UpdateTravelOrderIntegrationTest extends TestCase
         $response->assertUnauthorized();
     }
 
-    public function testStatusFieldValidation()
+    public function testStatusFieldMustBeApprovedOrCancelled()
     {
         $user = User::factory()->asAdmin()->create();
         Sanctum::actingAs($user);
@@ -39,9 +39,7 @@ class UpdateTravelOrderIntegrationTest extends TestCase
             ->withHeader('Accept', 'application/json')
             ->put($this->routeUrl.'/'.$travelOrder->id);
         $response->assertUnprocessable();
-        $errors = $response->json('errors');
-        $this->assertArrayHasKey('status', $errors);
-        $this->assertEquals('The status field is required.', $response->json('errors.status.0'));
+        $this->assertEquals('Travel Order status must be changed to approved or cancelled.', $response->json('message'));
 
         $response = $this
             ->withHeader('Accept', 'application/json')

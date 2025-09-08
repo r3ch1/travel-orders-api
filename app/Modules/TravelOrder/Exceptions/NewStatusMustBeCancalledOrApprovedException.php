@@ -6,12 +6,12 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
-class NewStatusNeedToBeCancalledOrApprovedException extends Exception
+class NewStatusMustBeCancalledOrApprovedException extends Exception
 {
     public function render(Request $request): JsonResponse
     {
         return $request->expectsJson()
-            ? response()->json(['message' => 'Travel Order status only can be changed to approved or cancelled.'], 422)
+            ? response()->json(['message' => 'Travel Order status must be changed to approved or cancelled.'], 422)
             : response()->json([], 422);
     }
 }

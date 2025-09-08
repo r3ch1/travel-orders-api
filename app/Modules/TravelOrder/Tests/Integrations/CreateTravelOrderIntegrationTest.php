@@ -17,7 +17,7 @@ class CreateTravelOrderIntegrationTest extends TestCase
 
     protected $routeUrl = 'api/v1/travel-orders';
 
-    public function testvalidateDepartureAndReturnRules()
+    public function testValidateRequiredFields()
     {
         $user = User::factory()->asClient()->create();
         Sanctum::actingAs($user);
@@ -31,6 +31,12 @@ class CreateTravelOrderIntegrationTest extends TestCase
         foreach ($requiredFields as $requiredField) {
             $this->assertArrayHasKey($requiredField, $errors);
         }
+    }
+
+    public function testDepartureAtMustBeAfterNextWeek()
+    {
+        $user = User::factory()->asClient()->create();
+        Sanctum::actingAs($user);
 
         $travelOrder = TravelOrder::factory()->withPassedDates()->forCurrentUser()->make();
         $response = $this
@@ -47,6 +53,12 @@ class CreateTravelOrderIntegrationTest extends TestCase
         $msg = 'The departure at field must be a date after '.date('Y-m-d', strtotime(now().'+ 1 week')).'.';
         $this->assertEquals($msg, $response->json('errors.departure_at.0'));
         $this->assertArrayHasKey('departure_at', $errors);
+    }
+
+    public function testReturnAtMustBeAfterDepartureAt()
+    {
+        $user = User::factory()->asClient()->create();
+        Sanctum::actingAs($user);
 
         $travelOrder = TravelOrder::factory()->forCurrentUser()->make();
         $response = $this
@@ -62,7 +74,14 @@ class CreateTravelOrderIntegrationTest extends TestCase
         $errors = $response->json('errors');
         $this->assertEquals('The return at field must be a date after departure at.', $response->json('errors.return_at.0'));
         $this->assertArrayHasKey('return_at', $errors);
+    }
 
+    public function testDepartureAtAndReturnAtDateFormat()
+    {
+        $user = User::factory()->asClient()->create();
+        Sanctum::actingAs($user);
+
+        $travelOrder = TravelOrder::factory()->forCurrentUser()->make();
         $response = $this
             ->withHeader('Accept', 'application/json')
             ->post($this->routeUrl, [
@@ -80,7 +99,7 @@ class CreateTravelOrderIntegrationTest extends TestCase
         $this->assertArrayHasKey('departure_at', $errors);
     }
 
-    public function testTravelOrderCanBeCreated()
+    public function testTravelOrderHappyPath()
     {
         $user = User::factory()->asClient()->create();
         Sanctum::actingAs($user);

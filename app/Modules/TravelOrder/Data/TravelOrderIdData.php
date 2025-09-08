@@ -17,7 +17,7 @@ class TravelOrderIdData extends Data
     public function __construct(
         #[FromRouteParameter('travel_order')]
         public int $id,
-        public string $status
+        public ?string $status
         ) {
             $this->status ??= Status::REQUESTED->value;
         }
@@ -25,7 +25,7 @@ class TravelOrderIdData extends Data
     public static function rules(ValidationContext $context): array
     {
         return [
-            'status' => ['required', Rule::in(Status::cases())]
+            'status' => ['nullable', Rule::in(Status::cases())]
         ];
     }
 }
