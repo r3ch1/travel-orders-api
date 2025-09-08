@@ -1,0 +1,271 @@
+{
+	"info": {
+		"_postman_id": "e82b1307-6a25-4942-81f4-a97573106ee1",
+		"name": "TRAVEL ORDERS API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2132860"
+	},
+	"item": [
+		{
+			"name": "travel-orders",
+			"item": [
+				{
+					"name": "index",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 5|73xsHPqpoKja3ybuZMdPmgB0rpD8hK8BLwDhTtaRe9787d4c",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 6|lQ29q9NLwENfX7BYLYvvcS2V3tXtXovMRg2jgT0fbef4c13f",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    // \"status\":\"dsa\",\n    \"date_start\" : \"2025-01-01\",\n    \"date_end\":\"2025-03-01\",\n    // \"per_page\":2,\n    // \"page\":2\n    \"destination\": \"Rio\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://rechi-travel-orders-api.localhost/api/v1/travel-orders",
+							"protocol": "http",
+							"host": [
+								"rechi-travel-orders-api",
+								"localhost"
+							],
+							"path": [
+								"api",
+								"v1",
+								"travel-orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 5|73xsHPqpoKja3ybuZMdPmgB0rpD8hK8BLwDhTtaRe9787d4c",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"applicant_name\": \"SEU NOME\",\n    \"destination\": \"Rio de Janeiro\",\n    \"departure_at\" : \"2026-01-01 12:00\",\n    \"return_at\" : \"2026-01-02 12:01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://rechi-travel-orders-api.localhost/api/v1/travel-orders",
+							"protocol": "http",
+							"host": [
+								"rechi-travel-orders-api",
+								"localhost"
+							],
+							"path": [
+								"api",
+								"v1",
+								"travel-orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 8|hVLsUAI3aJ3OTyngfC09ShQSNfiLpWPVUgBmLEWs79643152",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 7|a3nPUHmSujdm6aL0okZR8ZZqK5Bma5G5EUGxrIX0ea53c09a",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\":\"approved\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://rechi-travel-orders-api.localhost/api/v1/travel-orders/5",
+							"protocol": "http",
+							"host": [
+								"rechi-travel-orders-api",
+								"localhost"
+							],
+							"path": [
+								"api",
+								"v1",
+								"travel-orders",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 6|lQ29q9NLwENfX7BYLYvvcS2V3tXtXovMRg2jgT0fbef4c13f",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://rechi-travel-orders-api.localhost/api/v1/travel-orders/1",
+							"protocol": "http",
+							"host": [
+								"rechi-travel-orders-api",
+								"localhost"
+							],
+							"path": [
+								"api",
+								"v1",
+								"travel-orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"admin@system.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://rechi-travel-orders-api.localhost/api/v1/login",
+					"protocol": "http",
+					"host": [
+						"rechi-travel-orders-api",
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\" : \"Heric de Honkis e Branco\",\n    \"email\" : \"hericbranco@gmail.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://rechi-travel-orders-api.localhost/api/v1/register",
+					"protocol": "http",
+					"host": [
+						"rechi-travel-orders-api",
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
