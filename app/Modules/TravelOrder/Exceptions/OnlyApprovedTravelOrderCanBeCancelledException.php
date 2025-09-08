@@ -11,7 +11,7 @@ class OnlyApprovedTravelOrderCanBeCancelledException extends Exception
     public function render(Request $request): JsonResponse
     {
         return $request->expectsJson()
-            ? response()->json(['error' => 'Only Approved Travel Order can be Cancelled.'], 422)
+            ? response()->json(['message' => 'Only Approved Travel Order can be Cancelled.'], 422)
             : response()->json([], 422);
     }
 }

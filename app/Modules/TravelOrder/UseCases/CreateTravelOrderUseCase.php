@@ -2,9 +2,9 @@
 
 namespace App\Modules\TravelOrder\UseCases;
 
+use App\Models\TravelOrder;
 use App\Modules\TravelOrder\Data\TravelOrderData;
 use App\Modules\TravelOrder\Repositories\TravelOrderRepository;
-use App\Models\TravelOrder;
 
 class CreateTravelOrderUseCase
 {

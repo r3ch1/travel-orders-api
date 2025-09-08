@@ -36,8 +36,8 @@ class TravelOrderData extends Data
     public static function rules(ValidationContext $context): array
     {
         return [
-            'departureAt' => ['required', Rule::date()->format('Y-m-d H:i')],
-            'returnAt' => ['required', Rule::date()->format('Y-m-d H:i'), 'after:departure_at'],
+            'departure_at' => ['required', Rule::date()->format(self::DATE_FORMAT), 'after:'.date('Y-m-d', strtotime(now().'+ 1 week'))],
+            'return_at' => ['required', Rule::date()->format(self::DATE_FORMAT), 'after:departure_at'],
             'status' => ['nullable', Rule::in(Status::cases())]
         ];
     }

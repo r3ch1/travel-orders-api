@@ -16,7 +16,7 @@ class ProfileMiddleware
     public function handle(Request $request, Closure $next, string $profileName): Response
     {
         if ($request->user()->profile->name !== strtoupper($profileName)) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
 
         return $next($request);

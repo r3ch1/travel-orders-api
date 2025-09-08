@@ -9,6 +9,9 @@ use App\Modules\TravelOrder\Data\TravelOrderQueryData;
 use App\Support\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Modules\TravelOrder\Exceptions\OnlyApprovedTravelOrderCanBeCancelledException;
+use App\Modules\TravelOrder\Exceptions\OnlyFutureTravelOrderCanBeUpdatedException;
+use App\Modules\TravelOrder\Enums\Status;
 
 class TravelOrderRepository extends BaseRepository
 {
@@ -36,6 +39,14 @@ class TravelOrderRepository extends BaseRepository
 
     public function update(TravelOrder $travelOrder, TravelOrderIdData $data): TravelOrder
     {
+        if ($travelOrder->departure_at->lte(now())) {
+            throw new OnlyFutureTravelOrderCanBeUpdatedException;
+        }
+
+        if ($data->status === STATUS::CANCELLED->value && $travelOrder->status !== Status::APPROVED->value) {
+            throw new OnlyApprovedTravelOrderCanBeCancelledException;
+        }
+
         $travelOrder->update($data->toArray());
         return $travelOrder->fresh();
     }

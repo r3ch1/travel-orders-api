@@ -10,7 +10,7 @@ class TravelOrdersResource extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'travelOrders' => TravelOrderResource::collection($this->collection)
+            'travel_orders' => TravelOrderResource::collection($this->collection)
         ];
     }
 }
