@@ -47,20 +47,25 @@ docker-compose up -d
 
 ### 4. Instale as dependências
 ```bash
-docker-compose exec app composer install
+docker-compose exec php composer install
 ```
 
 ### 5. Execute as migrations
 ```bash
-docker-compose exec app php artisan migrate
+docker-compose exec php php artisan migrate
 ```
 
 ### 6. Gere a chave da aplicação
 ```bash
-docker-compose exec app php artisan key:generate
+docker-compose exec php php artisan key:generate
 ```
 
-### 7. Acesse a aplicação
+### 7. Inicie o worker de filas (para processar emails)
+```bash
+docker-compose exec php php artisan queue:work --daemon
+```
+
+### 8. Acesse a aplicação
 A API estará disponível nas URLs:
 
 **Opção 1 (Recomendada - funciona em qualquer SO):**
@@ -109,15 +114,42 @@ DB_DATABASE=travel_orders_api
 DB_USERNAME=root
 DB_PASSWORD=A123456
 
+# Configuração do Mailtrap (Recomendado)
 MAIL_MAILER=smtp
-MAIL_HOST=mailpit
-MAIL_PORT=1025
-MAIL_USERNAME=null
-MAIL_PASSWORD=null
-MAIL_ENCRYPTION=null
+MAIL_HOST=live.smtp.mailtrap.io
+MAIL_PORT=587
+MAIL_USERNAME=seu_username
+MAIL_PASSWORD=seu_password
+MAIL_ENCRYPTION=tls
+
+# Configuração de Filas
+QUEUE_CONNECTION=database
 
 USER_ADMIN_PASSWORD=12345678
 PER_PAGE=15
+```
+
+## 📧 Configuração de Email com Mailtrap
+
+### 1. Crie uma conta no [Mailtrap](https://mailtrap.io/)
+### 2. Acesse o painel e crie um novo inbox
+### 3. Configure as credenciais no seu `.env`:
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=seu_username_do_mailtrap
+MAIL_PASSWORD=seu_password_do_mailtrap
+```
+
+## 🔄 Sistema de Filas
+
+O sistema utiliza **filas no banco de dados** para processar o envio de emails de forma assíncrona.
+
+### Para processar as filas:
+```bash
+# Processar filas
+docker-compose exec php php artisan queue:work
 ```
 
 ## 🔐 Autenticação
@@ -193,7 +225,7 @@ PUT /api/v1/travel-orders/{id}
 
 ## 🚀 Collection Postman
 
-Para facilitar o teste da API, incluí uma collection do Postman com todos os endpoints configurados:
+Para facilitar o teste da API, incluímos uma collection do Postman com todos os endpoints configurados:
 
 [📥 Download da Collection Postman](https://github.com/r3ch1/travel-orders-api/blob/main/TRAVEL%20ORDERS%20API.postman_collection.json)
 
@@ -214,7 +246,7 @@ Para usar a URL customizada:
 ## 🧪 Executando Testes
 
 ```bash
-# Executar todos os testes
+# Executar testes do módulo TravelOrder
 docker-compose exec app php artisan test app/Modules/TravelOrder/Tests
 ```
 
@@ -232,15 +264,21 @@ docker-compose exec app php artisan test app/Modules/TravelOrder/Tests
 
 ## 📈 Estrutura do Projeto
 
+O sistema utiliza uma divisão de Módulos onde cada módulo possui a mesma estrutura de pastas. Grande parte das pastas são sempre criadas porém alguams são situacionais(enums, exceptions, notifications)
+
 ```
 app/
 ├── Modules/
 │   ├── TravelOrder/
 │   │   ├── Controllers/
 │   │   ├── Data/           # DTOs
+|   |   ├── Enums/          # Enums
+|   |   ├── Exceptions/     # Exceções do Módulo
 │   │   ├── UseCases/       # Casos de uso
 │   │   ├── Repositories/   # Acesso a dados
-│   │   └── Resources/      # Transformers
+│   │   ├── Resources/      # Transformers
+│   │   ├── Notifications/  # Notificações por email
+│   │   └── Tests/          # Testes
 │   └── User/
 ├── Models/
 ├── Support/    # Classes Reaproveitáveis
@@ -251,15 +289,23 @@ app/
 
 1. ✅ Apenas usuários com perfil **Admin** podem aprovar/cancelar pedidos
 2. ✅ Cada usuário só visualiza seus próprios pedidos
-3. ✅ Apenas pedidos **aprovados** podem be cancelados
-4. ✅ Notificação por email ao aprovar/cancelar
+3. ✅ Apenas pedidos **aprovados** podem ser cancelados
+4. ✅ Notificação por email ao aprovar/cancelar (processado via filas)
 5. ✅ Validação de datas (data de volta > data de ida)
 6. ✅ Os pedidos não podem ser criados com "data de ida" menor que semana seguinte da data atual 
 7. ✅ Não é possível Cancelar ou Aprovar um pedido com data de ida no passado
 
-## 📧 Notificações
+## 📧 Sistema de Notificações
 
-As notificações são enviadas por email quando um pedido é aprovado ou cancelado.
+As notificações são enviadas por email quando um pedido é aprovado ou cancelado. O sistema utiliza:
+
+- **Filas no banco de dados** para processamento assíncrono
+- **Mailtrap** para envio e teste de emails
+
+### Para visualizar emails enviados:
+1. Acesse sua conta no [Mailtrap](https://mailtrap.io/)
+2. Verifique o inbox configurado
+3. Todos os emails aparecerão lá para inspeção
 
 ## 🔒 Segurança
 
@@ -267,7 +313,7 @@ As notificações são enviadas por email quando um pedido é aprovado ou cancel
 - Validação de dados em todos os endpoints
 - Políticas de acesso por usuário e perfil
 - Proteção contra SQL Injection
-- CORS configurado
+- Processamento assíncrono de emails
 
 ## 📝 Licença
 
