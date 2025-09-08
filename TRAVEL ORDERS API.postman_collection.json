@@ -30,7 +30,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer 6|lQ29q9NLwENfX7BYLYvvcS2V3tXtXovMRg2jgT0fbef4c13f",
+								"value": "Bearer {{TOKEN_ADMIN}}",
 								"type": "text"
 							}
 						],
@@ -71,7 +71,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer 5|73xsHPqpoKja3ybuZMdPmgB0rpD8hK8BLwDhTtaRe9787d4c",
+								"value": "Bearer {{TOKEN_ADMIN}}",
 								"type": "text"
 							}
 						],
@@ -112,7 +112,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer 8|hVLsUAI3aJ3OTyngfC09ShQSNfiLpWPVUgBmLEWs79643152",
+								"value": "Bearer {{TOKEN_ADMIN}}",
 								"type": "text"
 							},
 							{
@@ -124,7 +124,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"status\":\"approved\"\n}",
+							"raw": "{\n    \"status\":\"cancelled\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -132,7 +132,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://rechi-travel-orders-api.localhost/api/v1/travel-orders/5",
+							"raw": "http://rechi-travel-orders-api.localhost/api/v1/travel-orders/4",
 							"protocol": "http",
 							"host": [
 								"rechi-travel-orders-api",
@@ -142,7 +142,7 @@
 								"api",
 								"v1",
 								"travel-orders",
-								"5"
+								"4"
 							]
 						}
 					},
@@ -163,7 +163,7 @@
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer 6|lQ29q9NLwENfX7BYLYvvcS2V3tXtXovMRg2jgT0fbef4c13f",
+								"value": "Bearer {{TOKEN_ADMIN}}",
 								"type": "text"
 							}
 						],
@@ -266,6 +266,52 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.sendRequest({",
+					"    url: 'http://rechi-travel-orders-api.localhost/api/v1/login',",
+					"    method: 'POST',",
+					"    header: 'headername1:value1',",
+					"    body: {",
+					"          mode: 'urlencoded',",
+					"          urlencoded: [",
+					"            {key: \"email\", value: \"admin@system.com\"},",
+					"            {key: \"password\", value: \"12345678\"}",
+					"        ]",
+					"      }",
+					"}, function (err, res) {",
+					"    pm.collectionVariables.set(\"TOKEN_ADMIN\", res.json().token);",
+					"});",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "TOKEN_ADMIN",
+			"value": ""
 		}
 	]
 }
