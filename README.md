@@ -50,7 +50,7 @@ docker-compose up -d
 docker-compose exec app composer install
 ```
 
-### 5. Execute as migrations e seeds
+### 5. Execute as migrations
 ```bash
 docker-compose exec app php artisan migrate
 ```
@@ -61,7 +61,36 @@ docker-compose exec app php artisan key:generate
 ```
 
 ### 7. Acesse a aplicação
-A API estará disponível em: `http://rechi-travel-orders-api.localhost`
+A API estará disponível nas URLs:
+
+**Opção 1 (Recomendada - funciona em qualquer SO):**
+```bash
+http://localhost/api/v1
+```
+
+**Opção 2 (URL customizada):**
+```bash
+http://rechi-travel-orders-api.localhost/api/v1
+```
+
+## 🌐 URLs de Acesso
+
+### URLs Principais
+- **API**: http://localhost/api/v1
+- **MySQL**: localhost:3306
+
+### Configuração de Hosts (Opcional)
+Para usar a URL customizada, adicione no arquivo de hosts do seu sistema:
+
+**Windows** (`C:\Windows\System32\drivers\etc\hosts`):
+```
+127.0.0.1 rechi-travel-orders-api.localhost
+```
+
+**Linux/Mac** (`/etc/hosts`):
+```
+127.0.0.1 rechi-travel-orders-api.localhost
+```
 
 ## ⚙️ Configuração de Ambiente
 
@@ -71,7 +100,7 @@ APP_NAME=TravelOrdersAPI
 APP_ENV=local
 APP_KEY=
 APP_DEBUG=true
-APP_URL=http://rechi-travel-orders-api.localhost
+APP_URL=http://localhost
 
 DB_CONNECTION=mysql
 DB_HOST=mysql
@@ -81,7 +110,7 @@ DB_USERNAME=root
 DB_PASSWORD=A123456
 
 MAIL_MAILER=smtp
-MAIL_HOST=<your mailtrap host>
+MAIL_HOST=mailpit
 MAIL_PORT=1025
 MAIL_USERNAME=null
 MAIL_PASSWORD=null
@@ -162,19 +191,9 @@ PUT /api/v1/travel-orders/{id}
 }
 ```
 
-## 🧪 Executando Testes
-
-```bash
-# Executar todos os testes
-docker-compose exec app php artisan test
-
-# Executar testes específicos
-docker-compose exec app php artisan test app/Modules/TravelOrder/Tests
-```
-
 ## 🚀 Collection Postman
 
-Para facilitar o teste da API, incluímos uma collection do Postman com todos os endpoints configurados:
+Para facilitar o teste da API, incluí uma collection do Postman com todos os endpoints configurados:
 
 [📥 Download da Collection Postman](https://github.com/r3ch1/travel-orders-api/blob/main/TRAVEL%20ORDERS%20API.postman_collection.json)
 
@@ -182,7 +201,22 @@ Para facilitar o teste da API, incluímos uma collection do Postman com todos os
 1. Abra o Postman
 2. Clique em "Import" 
 3. Selecione o arquivo JSON da collection
-4. Execute os requests de register/login primeiro para obter o token(Eu ja deixei configurado um pre-request-script para que o sistema seja acessado como ADMIN)
+4. Execute os requests de register/login primeiro para obter o token
+
+### Configuração da URL base:
+A collection está configurada para usar `http://localhost` por padrão.
+
+Para usar a URL customizada:
+1. Abra a collection no Postman
+2. Vá em "Variables"
+3. Altere `BASE_URL` para `http://rechi-travel-orders-api.localhost`
+
+## 🧪 Executando Testes
+
+```bash
+# Executar todos os testes
+docker-compose exec app php artisan test app/Modules/TravelOrder/Tests
+```
 
 ## 📊 Estrutura do Banco
 
@@ -217,11 +251,11 @@ app/
 
 1. ✅ Apenas usuários com perfil **Admin** podem aprovar/cancelar pedidos
 2. ✅ Cada usuário só visualiza seus próprios pedidos
-3. ✅ Apenas pedidos **aprovados** podem ser cancelados
+3. ✅ Apenas pedidos **aprovados** podem be cancelados
 4. ✅ Notificação por email ao aprovar/cancelar
 5. ✅ Validação de datas (data de volta > data de ida)
-6. ✅ Os pedidos não podem ser criados com "data de ida"(departure_at) menor que semana seguinte da data atual 
-7. ✅ Não é possível Cancelar ou Aprovar um pedido com data de ida no passado.
+6. ✅ Os pedidos não podem ser criados com "data de ida" menor que semana seguinte da data atual 
+7. ✅ Não é possível Cancelar ou Aprovar um pedido com data de ida no passado
 
 ## 📧 Notificações
 
@@ -245,6 +279,7 @@ Este projeto foi desenvolvido como teste técnico.
 
 - **Paginação**: 15 itens por página (configurável)
 - **Timeout**: 60 segundos para tokens
+- **Logs**: Armazenados em `storage/logs/laravel.log`
 
 Para dúvidas ou problemas, verifique os logs ou abra uma issue no repositório.
 

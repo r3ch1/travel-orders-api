@@ -44,11 +44,9 @@
 							}
 						},
 						"url": {
-							"raw": "http://rechi-travel-orders-api.localhost/api/v1/travel-orders",
-							"protocol": "http",
+							"raw": "{{BASE_URL}}/api/v1/travel-orders",
 							"host": [
-								"rechi-travel-orders-api",
-								"localhost"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"api",
@@ -85,11 +83,9 @@
 							}
 						},
 						"url": {
-							"raw": "http://rechi-travel-orders-api.localhost/api/v1/travel-orders",
-							"protocol": "http",
+							"raw": "{{BASE_URL}}/api/v1/travel-orders",
 							"host": [
-								"rechi-travel-orders-api",
-								"localhost"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"api",
@@ -132,11 +128,9 @@
 							}
 						},
 						"url": {
-							"raw": "http://rechi-travel-orders-api.localhost/api/v1/travel-orders/4",
-							"protocol": "http",
+							"raw": "{{BASE_URL}}/api/v1/travel-orders/4",
 							"host": [
-								"rechi-travel-orders-api",
-								"localhost"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"api",
@@ -177,11 +171,9 @@
 							}
 						},
 						"url": {
-							"raw": "http://rechi-travel-orders-api.localhost/api/v1/travel-orders/1",
-							"protocol": "http",
+							"raw": "{{BASE_URL}}/api/v1/travel-orders/1",
 							"host": [
-								"rechi-travel-orders-api",
-								"localhost"
+								"{{BASE_URL}}"
 							],
 							"path": [
 								"api",
@@ -216,11 +208,9 @@
 					}
 				},
 				"url": {
-					"raw": "http://rechi-travel-orders-api.localhost/api/v1/login",
-					"protocol": "http",
+					"raw": "{{BASE_URL}}/api/v1/login",
 					"host": [
-						"rechi-travel-orders-api",
-						"localhost"
+						"{{BASE_URL}}"
 					],
 					"path": [
 						"api",
@@ -244,7 +234,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\" : \"Heric de Honkis e Branco\",\n    \"email\" : \"hericbranco@gmail.com\",\n    \"password\": \"12345678\"\n}",
+					"raw": "{\n    \"name\" : \"Heric de Honkis e Branco\",\n    \"email\" : \"hericbranco1@gmail.com\",\n    \"password\": \"12345678\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -252,11 +242,9 @@
 					}
 				},
 				"url": {
-					"raw": "http://rechi-travel-orders-api.localhost/api/v1/register",
-					"protocol": "http",
+					"raw": "{{BASE_URL}}/api/v1/register",
 					"host": [
-						"rechi-travel-orders-api",
-						"localhost"
+						"{{BASE_URL}}"
 					],
 					"path": [
 						"api",
@@ -279,12 +267,18 @@
 					"    url: 'http://rechi-travel-orders-api.localhost/api/v1/login',",
 					"    method: 'POST',",
 					"    header: 'headername1:value1',",
+					"    ",
 					"    body: {",
-					"          mode: 'urlencoded',",
-					"          urlencoded: [",
-					"            {key: \"email\", value: \"admin@system.com\"},",
-					"            {key: \"password\", value: \"12345678\"}",
-					"        ]",
+					"        mode: 'raw',",
+					"        raw: JSON.stringify({",
+					"            email: \"admin@system.com\",",
+					"            password: \"12345678\"",
+					"        }),",
+					"        options: {",
+					"            raw: {",
+					"                language: 'json'",
+					"            }",
+					"        }",
 					"      }",
 					"}, function (err, res) {",
 					"    pm.collectionVariables.set(\"TOKEN_ADMIN\", res.json().token);",
@@ -306,8 +300,12 @@
 	],
 	"variable": [
 		{
-			"key": "token",
-			"value": ""
+			"key": "BASE_URL",
+			"value": "http://localhost",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			}
 		},
 		{
 			"key": "TOKEN_ADMIN",
