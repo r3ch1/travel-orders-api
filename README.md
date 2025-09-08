@@ -1,61 +1,286 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🚀 Travel Orders API - Microsserviço de Gestão de Viagens Corporativas
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+API RESTful para gerenciamento de pedidos de viagem corporativa desenvolvida em Laravel 12 com Sanctum para autenticação.
 
-## About Laravel
+## 📋 Funcionalidades
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- ✅ **Autenticação por tokens** com Laravel Sanctum
+- ✅ **CRUD completo** de pedidos de viagem
+- ✅ **Filtros avançados** por status, destino e período
+- ✅ **Validações de negócio** (apenas admin pode aprovar/cancelar)
+- ✅ **Notificações por email** para aprovações/cancelamentos
+- ✅ **Políticas de acesso** (cada usuário vê apenas seus pedidos)
+- ✅ **Testes automatizados** com PHPUnit
+- ✅ **Dockerizado** para fácil execução
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🛠️ Tecnologias
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Laravel 12** - Framework PHP
+- **Sanctum** - Autenticação por tokens
+- **MySQL** - Banco de dados
+- **Docker & Docker Compose** - Containerização
+- **PHPUnit** - Testes automatizados
+- **Laravel Data** - DTOs e validação
 
-## Learning Laravel
+## 🚀 Como executar com Docker
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Pré-requisitos
+- Docker e Docker Compose instalados
+- Git
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 1. Clone o projeto
+```bash
+git clone git@github.com:r3ch1/travel-orders-api.git
+cd travel-orders-api
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Configure o ambiente
+Copie o arquivo de ambiente:
+```bash
+cp .env.example .env
+```
 
-## Laravel Sponsors
+### 3. Execute os containers
+```bash
+docker-compose up -d
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 4. Instale as dependências
+```bash
+docker-compose exec app composer install
+```
 
-### Premium Partners
+### 5. Execute as migrations
+```bash
+docker-compose exec app php artisan migrate
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 6. Gere a chave da aplicação
+```bash
+docker-compose exec app php artisan key:generate
+```
 
-## Contributing
+### 7. Acesse a aplicação
+A API estará disponível nas URLs:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**Opção 1 (Recomendada - funciona em qualquer SO):**
+```bash
+http://localhost/api/v1
+```
 
-## Code of Conduct
+**Opção 2 (URL customizada):**
+```bash
+http://rechi-travel-orders-api.localhost/api/v1
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🌐 URLs de Acesso
 
-## Security Vulnerabilities
+### URLs Principais
+- **API**: http://localhost/api/v1
+- **MySQL**: localhost:3306
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Configuração de Hosts (Opcional)
+Para usar a URL customizada, adicione no arquivo de hosts do seu sistema:
 
-## License
+**Windows** (`C:\Windows\System32\drivers\etc\hosts`):
+```
+127.0.0.1 rechi-travel-orders-api.localhost
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**Linux/Mac** (`/etc/hosts`):
+```
+127.0.0.1 rechi-travel-orders-api.localhost
+```
+
+## ⚙️ Configuração de Ambiente
+
+### Variáveis de Ambiente (.env)
+```env
+APP_NAME=TravelOrdersAPI
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=travel_orders_api
+DB_USERNAME=root
+DB_PASSWORD=A123456
+
+MAIL_MAILER=smtp
+MAIL_HOST=mailpit
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+
+USER_ADMIN_PASSWORD=12345678
+PER_PAGE=15
+```
+
+## 🔐 Autenticação
+
+### 1. Registrar usuário
+```bash
+POST /api/v1/register
+{
+    "name": "João Silva",
+    "email": "joao@empresa.com",
+    "password": "senha123"
+}
+```
+
+### 2. Login
+```bash
+POST /api/v1/login
+{
+    "email": "joao@empresa.com",
+    "password": "senha123"
+}
+```
+
+**Resposta:**
+```json
+{
+    "token": "1|abcdef123456..."
+}
+```
+
+### 3. Usar token
+Adicione o header em todas requisições:
+```http
+Authorization: Bearer 1|abcdef123456...
+```
+
+### Usuário Admin Padrão
+- **Email**: admin@system.com
+- **Senha**: 12345678 (configurável no .env)
+
+## 📋 Endpoints da API
+
+### Pedidos de Viagem (Requer autenticação)
+
+#### Listar pedidos (com filtros)
+```http
+GET /api/v1/travel-orders?status=approved&destination=Rio&date_start=2024-01-01&date_end=2024-01-31
+```
+
+#### Criar pedido
+```http
+POST /api/v1/travel-orders
+{
+    "applicant_name": "João Silva",
+    "destination": "Rio de Janeiro",
+    "departure_at": "2024-01-15 08:00",
+    "return_at": "2024-01-20 18:00"
+}
+```
+
+#### Visualizar pedido específico
+```http
+GET /api/v1/travel-orders/{id}
+```
+
+#### Atualizar status (apenas admin)
+```http
+PUT /api/v1/travel-orders/{id}
+{
+    "status": "approved" // ou "cancelled"
+}
+```
+
+## 🚀 Collection Postman
+
+Para facilitar o teste da API, incluí uma collection do Postman com todos os endpoints configurados:
+
+[📥 Download da Collection Postman](https://github.com/r3ch1/travel-orders-api/blob/main/TRAVEL%20ORDERS%20API.postman_collection.json)
+
+### Como importar:
+1. Abra o Postman
+2. Clique em "Import" 
+3. Selecione o arquivo JSON da collection
+4. Execute os requests de register/login primeiro para obter o token
+
+### Configuração da URL base:
+A collection está configurada para usar `http://localhost` por padrão.
+
+Para usar a URL customizada:
+1. Abra a collection no Postman
+2. Vá em "Variables"
+3. Altere `BASE_URL` para `http://rechi-travel-orders-api.localhost`
+
+## 🧪 Executando Testes
+
+```bash
+# Executar todos os testes
+docker-compose exec app php artisan test app/Modules/TravelOrder/Tests
+```
+
+## 📊 Estrutura do Banco
+
+### Tabelas Principais
+- **users** - Usuários do sistema
+- **profiles** - Perfis (Admin, Client)
+- **travel_orders** - Pedidos de viagem
+
+### Relacionamentos
+- `User` → `hasMany` → `TravelOrder`
+- `TravelOrder` → `belongsTo` → `User`
+- `User` → `belongsTo` → `Profile`
+
+## 📈 Estrutura do Projeto
+
+```
+app/
+├── Modules/
+│   ├── TravelOrder/
+│   │   ├── Controllers/
+│   │   ├── Data/           # DTOs
+│   │   ├── UseCases/       # Casos de uso
+│   │   ├── Repositories/   # Acesso a dados
+│   │   └── Resources/      # Transformers
+│   └── User/
+├── Models/
+├── Support/    # Classes Reaproveitáveis
+└── Providers/
+```
+
+## 🎯 Regras de Negócio
+
+1. ✅ Apenas usuários com perfil **Admin** podem aprovar/cancelar pedidos
+2. ✅ Cada usuário só visualiza seus próprios pedidos
+3. ✅ Apenas pedidos **aprovados** podem be cancelados
+4. ✅ Notificação por email ao aprovar/cancelar
+5. ✅ Validação de datas (data de volta > data de ida)
+6. ✅ Os pedidos não podem ser criados com "data de ida" menor que semana seguinte da data atual 
+7. ✅ Não é possível Cancelar ou Aprovar um pedido com data de ida no passado
+
+## 📧 Notificações
+
+As notificações são enviadas por email quando um pedido é aprovado ou cancelado.
+
+## 🔒 Segurança
+
+- Autenticação por tokens com Sanctum
+- Validação de dados em todos os endpoints
+- Políticas de acesso por usuário e perfil
+- Proteção contra SQL Injection
+- CORS configurado
+
+## 📝 Licença
+
+Este projeto foi desenvolvido como teste técnico.
+
+---
+
+## 💡 Informações Adicionais
+
+- **Paginação**: 15 itens por página (configurável)
+- **Timeout**: 60 segundos para tokens
+- **Logs**: Armazenados em `storage/logs/laravel.log`
+
+Para dúvidas ou problemas, verifique os logs ou abra uma issue no repositório.
+
+**📎 Link da Collection Postman:** [TRAVEL ORDERS API.postman_collection.json](https://github.com/r3ch1/travel-orders-api/blob/main/TRAVEL%20ORDERS%20API.postman_collection.json)
