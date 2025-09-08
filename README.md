@@ -225,7 +225,7 @@ PUT /api/v1/travel-orders/{id}
 
 ## 🚀 Collection Postman
 
-Para facilitar o teste da API, incluímos uma collection do Postman com todos os endpoints configurados:
+Para facilitar o teste da API, inclui uma collection do Postman com todos os endpoints configurados:
 
 [📥 Download da Collection Postman](https://github.com/r3ch1/travel-orders-api/blob/main/TRAVEL%20ORDERS%20API.postman_collection.json)
 
